@@ -1,4 +1,5 @@
 -- Generated from template
+require('timers')
 
 if CAddonTemplateGameMode == nil then
 	CAddonTemplateGameMode = class({})

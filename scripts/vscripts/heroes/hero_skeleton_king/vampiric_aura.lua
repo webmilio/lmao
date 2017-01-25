@@ -1,6 +1,3 @@
---[[Author: Pizzalol
-	Date: 24.03.2015.
-	Checks if the unit is owned by a player]]
 function VampiricAura( keys )
 	local caster = keys.caster
 	local target = keys.target

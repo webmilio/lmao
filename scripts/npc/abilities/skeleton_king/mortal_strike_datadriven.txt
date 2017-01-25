@@ -1,0 +1,99 @@
+	"skeleton_king_mortal_strike_datadriven"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"skeleton_king_mortal_strike"
+	
+		"precache"
+		{
+		"soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+		"particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
+		"particle"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+		
+		}
+	
+		"AbilityCooldown"				"11.0 9.0 7.0 5.0"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"crit_multiplier"		"150 175 200 225"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"-25 -25 -25 -25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attackspeed"		"-25 -25 -25 -25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 3.0 3.0 3.0"
+			}
+		}
+	
+		"Modifiers"
+		{
+	
+			"modifier_mortal_strike_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%crit_multiplier"
+				}
+	
+				"OnAttackLanded"
+				{
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_mortal_strike_slow_datadriven"
+						"Target"	"TARGET"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"		"TARGET"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_SkeletonKing.CriticalStrike"
+						"Target"		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_skeleton_king/mortal_strike.lua"	
+						"Function"		"MortalStrike"						
+					}
+				}
+			}
+	
+			"modifier_mortal_strike_slow_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+				"StatusEffectName"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+				"StatusEffectPriority"	"3"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movespeed"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attackspeed"
+				}
+			}
+	
+		}
+	}

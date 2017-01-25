@@ -11,5 +11,5 @@ function MortalStrike( keys )
 
 	Timers:CreateTimer(cooldown, function()
 		ability:ApplyDataDrivenModifier(caster, caster, modifierName, {})
-		end)	
+	end)	
 end
