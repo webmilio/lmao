@@ -1,690 +1,596 @@
-	"DOTAAbilities"
+"DOTAAbilities"
+{
+
+	--[[ ANTIMAGE ]]
+	"antimage_mana_void_datadriven"
 	{
-		"Version"		"1"
-		
-		"antimage_spell_shield_datadriven"
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"antimage_mana_void"
+		"AOERadius"						"%mana_void_aoe_radius"
+	
+		"precache"
 		{
-			"BaseClass"						"ability_datadriven"
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-			"AbilityTextureName"			"antimage_spell_shield"
-			
-			"precache"
+			"particle"					"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+	
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		"AbilityCooldown"				"70.0 70.0 70.0"
+	
+		"AbilityManaCost"				"125 200 275"
+	
+		"AbilityModifierSupportValue"	"0.0"	-- damage only
+		
+		"AbilitySpecial"
+		{
+			"01"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_void_damage_per_mana"		"0.6 0.85 1.1"
 			}
 			
-			"AbilityCastPoint"              "0"
-			"AbilityCastRange"              "0"
-			
-			"AbilityCooldown"               "2"
-			"AbilityManaCost"               "75 75 75 75"
-			
-			"AbilitySpecial"
+			"02"
 			{
-				"01"
-				{
-					"var_type"						"FIELD_INTEGER"
-					"spell_shield_resistance"		"10 20 30 40"
-				}
-				"02"
-				{
-					"var_type"						"FIELD_FLOAT"
-					"duration"              		"2.0 2.0 2.0 2.0"
-				}
-		
+				"var_type"				"FIELD_FLOAT"
+				"mana_void_ministun"	"0.15"
 			}
-		
-			"OnSpellStart"
-			{
-				"FireSound"
-				{
-					"EffectName"    "Hero_LifeStealer.Rage"
-					"Target"        "CASTER"
-				}
-		
-				"RunScript"
-				{
-					"ScriptFile"    "scripts/vscripts/heroes/hero_anti_mage/spell_shield.lua"
-					"Function"        "SpellImmune"
-				}
-		
-				"ApplyModifier"
-				{
-					"ModifierName"  "modifier_spell_block_ability"
-					"Target"        "CASTER"
-					"Duration"      "%duration"
-				}
-		
-			}
-		
-			"Modifiers"
-			{
-				"modifier_spell_shield_datadriven"
-				{
-					"Passive"	"1"
-					"IsHidden"	"1"
-		
-					"Properties"
-					{
-						"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%spell_shield_resistance"
-					}
-				}
-				"modifier_spell_block_ability"
-				{
-					"Passive"           	"0"
-					"IsHidden"          	"0"
-					"IsDebuff"          	"0"
-		
-					"StatusEffectName"         "particles/status_fx/status_effect_life_stealer_rage.vpcf"        
-					"StatusEffectPriority"  	"10"
 			
-					"OnCreated"
-					{
-						"AttachEffect"
-						{
-							"EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
-							"EffectAttachType"  "attach_hitloc"
-							"Target"            "CASTER"
-							"ControlPointEntities"
-							{
-								"CASTER"    	"attach_hitloc"
-							}
-						}
-					}
-		
-					"States"
-					{
-						"MODIFIER_STATE_MAGIC_IMMUNE"        "MODIFIER_STATE_VALUE_ENABLED"
-					}
-				}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_void_aoe_radius"	"500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"agility_damage_pct"	"0.25"
 			}
 		}
-
-		"antimage_mana_void_datadriven"
+	
+		"OnAbilityPhaseStart"
 		{
-			"BaseClass"				"ability_datadriven"
-			"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-			"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-			"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
-			"FightRecapLevel"				"2"
-			"AbilityTextureName"			"antimage_mana_void"
-			"AOERadius"						"%mana_void_aoe_radius"
-
-			"precache"
+			"FireSound"
 			{
-				"particle"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
-				"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
-			}
-
-			"AbilityCastRange"				"300"
-			"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-
-			"AbilityCooldown"				"70.0 70.0 70.0"
-
-			"AbilityManaCost"				"125 200 275"
-
-			"AbilityModifierSupportValue"	"0.0"	// damage only
-			
-			"AbilitySpecial"
-			{
-				"01"
+				"EffectName"			"Hero_Antimage.ManaVoidCast"
+				"Target"
 				{
-					"var_type"						"FIELD_FLOAT"
-					"mana_void_damage_per_mana"		"0.6 0.85 1.1"
-				}
-				
-				"02"
-				{
-					"var_type"						"FIELD_FLOAT"
-					"mana_void_ministun"			"0.15"
-				}
-				
-				"03"
-				{
-					"var_type"						"FIELD_INTEGER"
-					"mana_void_aoe_radius"			"500"
-				}
-				"04"
-				{
-					"var_type"				"FIELD_FLOAT"
-					"agility_damage_pct"				"0.25"
-				}
-			}
-
-			"OnAbilityPhaseStart"
-			{
-				"FireSound"
-				{
-					"EffectName"		"Hero_Antimage.ManaVoidCast"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-					}
-				}
-			}
-
-			"OnSpellStart"
-			{
-				"FireSound"
-				{
-					"EffectName"		"Hero_Antimage.ManaVoid"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-					}
-				}
-
-				"FireEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
-					"EffectAttachType"	"attach_hitloc"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-					}
-
-					"ControlPoints"
-					{
-						"00"	"0 0 0"
-						"01"	"%mana_void_aoe_radius 0 0"
-					}
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_mana_void_ministun_datadriven"
-					"Target"
-					{
-						"Center"	"TARGET"
-						"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-					}
-					"Duration"	"%mana_void_ministun"
-				}
-
-				"RunScript"
-				{
-					"ScriptFile"	"scripts/vscripts/heroes/hero_antimage/mana_void.lua"
-					"Function"		"ManaVoid"
-					"Target"		"TARGET"
-				}
-			}
-
-			"Modifiers"
-			{
-				"modifier_mana_void_ministun_datadriven"
-				{
-					"IsDebuff"	"1"
-					"States"
-					{
-						"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-					}
-				}
-			}
-		}
-		
-		"phantom_assassin_phantom_strike_datadriven"
-		{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"						"ability_datadriven"
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-			"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-			"AbilityTextureName"			"phantom_assassin_phantom_strike"
-			"CastFilterRejectCaster" 		"1"
-		
-			// Precache
-			//-------------------------------------------------------------------------------------------------------------
-			"precache"
-			{
-				"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
-				"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-			}
-			
-			// Casting
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityCastRange"				"1000 1000 1000 1000"
-			"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-		
-			// Time		
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityCooldown"				"14 11 8 5"
-		
-			// Duration
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityDuration"				"3 3 3 3"
-		
-			// Cost
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityManaCost"				"50 50 50 50"
-			
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
-			{
-				"01"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"bonus_attack_speed"	"130"
-				}
-				
-				"02"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"bonus_max_attack_count"	"4"
-				}
-				"03"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"tooltip_range"			"1000 1000 1000 1000"
-				}
-			}
-		
-			"OnSpellStart"
-			{
-				"Blink"
-				{
-					"Target"	"TARGET"
-				}
-		
-				"FireSound"
-				{
-					"EffectName"		"Hero_PhantomAssassin.Strike.Start"
-					"Target"			"CASTER"
-				}
-		
-				"AttachEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"CASTER"
-				}
-		
-				"FireSound"
-				{
-					"EffectName"		"Hero_PhantomAssassin.Strike.End"
-					"Target"			"CASTER"
-				}
-		
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/hero_phantom_assassin/phantom_strike.lua"
-					"Function"		"PhantomStrike"
-					"phantom_strike_modifier"	"modifier_phantom_strike_datadriven"
-				}
-			}
-		
-			"Modifiers"
-			{
-				"modifier_phantom_strike_datadriven"
-				{
-					"IsBuff"	"1"
-		
-					"OnAttackLanded"
-					// "%attack_damage" is set to the damage value before mitigation
-					{
-						"RunScript"
-						{
-							"ScriptFile"	"heroes/hero_phantom_assassin/phantom_strike.lua"
-							"Function"		"PhantomStrikeAttack"
-							"phantom_strike_modifier"	"modifier_phantom_strike_datadriven"
-						}
-					}
-		
-					"Properties"
-					{
-						"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
-					}
-				}
-			}
-		}
-
-		"skeleton_king_hellfire_blast_datadriven"
-		{
-			"BaseClass"						"ability_datadriven"
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-			"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-			"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-			"FightRecapLevel"				"1"
-			"AbilityTextureName"			"skeleton_king_hellfire_blast"
-			
-			"AbilityCastRange"				"525"
-			"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
-		
-			"AbilityCooldown"				"8.0 8.0 8.0 8.0"
-			"AbilityDamage"					"50 100 150 200"
-			"AbilityManaCost"				"140"
-			"AbilityModifierSupportValue"	"0.5"
-		
-			"AbilitySpecial"
-			{
-				"01"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"blast_speed"			"1000"
-				}
-				
-				"02"
-				{
-					"var_type"				"FIELD_FLOAT"
-					"blast_stun_duration"	"2.0"
-				}
-				
-				"03"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"blast_slow"			"-20"
-				}
-				
-				"04"
-				{
-					"var_type"				"FIELD_FLOAT"
-					"blast_dot_duration"	"4"
-				}
-				
-				"05"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"blast_dot_damage"		"15 30 40 50"
-				}
-				
-				"06"
-				{
-					"var_type"				"FIELD_FLOAT"
-					"tooltip_slow_duration"	"2"
-				}
-			}
-		
-			"precache"
-			{
-				"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
-				"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
-				"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
-				"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
-				"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
-			}
-		
-			"OnAbilityPhaseStart"
-			{
-				"FireEffect"
-				{
-					"EffectName"        "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
-					"EffectAttachType"  "start_at_customorigin"
-					
-					"ControlPointEntities"
-					{
-						"CASTER"		"attach_attack2"
-					}
-				}
-			}
-		
-			"OnSpellStart"
-			{
-				"TrackingProjectile"
-				{
-				    "Target"           	"TARGET"
-				    "EffectName"       	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
-				    "Dodgeable"        	"1"
-				    "ProvidesVision"   	"0"
-				    "VisionRadius"     	"0"
-				    "MoveSpeed"        	"%blast_speed"
-				    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
-				}
-		
-				"FireSound"
-				{
-					"EffectName"		"Hero_SkeletonKing.Hellfire_Blast"
-					"Target"			"CASTER"
-				}
-			}
-		
-			"OnProjectileHitUnit"
-			{
-				"DeleteOnHit"			"1"
-		
-				"FireSound"
-				{
-					"EffectName"	"Hero_SkeletonKing.Hellfire_BlastImpact"
-					"Target"		"CASTER"
-				}
-		
-				"Damage"
-				{
-					"Target"		"TARGET"
-					"Type"			"DAMAGE_TYPE_MAGICAL"
-					"Damage"		 "%AbilityDamage"
-				}
-		
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_hellfire_blast_stun"
-					"Target"		"TARGET"
-				}
-		
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_hellfire_blast_slow"
-					"Target"		"TARGET"
-				}
-		
-				"DelayedAction"
-				{
-					"Delay"			"%blast_stun_duration"
-					"Action"
-					{
-						"ApplyModifier"
-						{
-							"ModifierName"	"modifier_hellfire_blast_dot"
-							"Target"		"TARGET"
-						}
-					}
-				}
-				
-		
-				"FireEffect"
-				{
-					"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
-					"EffectAttachType"	"follow_origin"
-					"Target"			"TARGET"
-		
-					//CP3 needs to be attached to the target hit
-					"ControlPointEntities"
-					{
-						"TARGET"		"attach_hitloc"
-						"TARGET"		"attach_hitloc"
-						"TARGET"		"attach_hitloc"
-						"TARGET"		"attach_hitloc"
-					}
-				}
-			}
-		
-			"Modifiers"
-			{
-				"modifier_hellfire_blast_stun"
-				{
-					"IsDebuff"			"1"
-					"Duration"			"%blast_stun_duration"
-					"States"
-					{
-						"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-					}
-		
-					"OverrideAnimation"	"ACT_DOTA_DISABLED"
-					"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-					"EffectAttachType"	"follow_overhead"
-				}
-		
-				"modifier_hellfire_blast_slow"
-				{
-					"IsDebuff"			"1"
-					"Duration"			"%blast_dot_duration"
-		
-					"Properties"
-					{
-						"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%blast_slow"
-					}
-		
-					"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
-					"EffectAttachType"	"follow_origin"
-				}
-		
-				"modifier_hellfire_blast_dot"
-				{
-					"IsHidden"	"1"
-					"Duration"	"%tooltip_slow_duration"
-		
-					"ThinkInterval"		"1"
-					"OnIntervalThink"
-					{
-						"Damage"
-						{
-							"Target"	"TARGET"
-							"Type"		"DAMAGE_TYPE_MAGICAL"
-							"Damage"	"%blast_dot_damage"
-						}
-					}
-				}
-			}
-		}
-
-		"skeleton_king_vampiric_aura_datadriven"
-		{
-			"BaseClass"						"ability_datadriven"
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-			"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-			"AbilityTextureName"			"skeleton_king_vampiric_aura"
-		
-			"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-			"AbilityCooldown"				"3.0 3.0 3.0 3.0"
-			"AbilityManaCost"				"25 25 25 25"
-		
-			"precache"
-			{
-				"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
-			}
-		
-			"AbilitySpecial"
-			{
-				"01"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"lifesteal_pct"			"60 80 100 120"
-				}
-				"02"
-				{
-					"var_type"				"FIELD_FLOAT"
-					"duration"				"8.0 8.0 8.0 8.0"
-				}
-				"03"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"aura_radius"			"900"
-				}
-			}
-		
-			"OnSpellStart"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"				"modifier_vampiric_aura_datadriven"
-					"Target"					"CASTER"
-				}
-				"ActOnTargets"
-				{
-					"Target"
-					{
-						"Center"  				"CASTER"
-						"Radius" 				"%aura_radius"
-						"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-						"Types" 				"DOTA_UNIT_TARGET_BASIC"
-					}
-				
-					"Action"    
-					{
-						"RunScript"
-						{
-							"ScriptFile"		"heroes/hero_skeleton_king/vampiric_aura.lua"
-							"Function"			"VampiricAura"
-							"modifier"			"modifier_vampiric_aura_datadriven"
-						}
-					}
-				}
-			}
-		
-			"Modifiers"
-			{
-				"modifier_vampiric_aura_datadriven"
-				{
-					"Duration"	"%duration"
-					"IsBuff"	"1"
-		
-					"EffectName"			"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
-					"EffectAttachType"		"follow_origin"
-		
-					"OnAttackLanded"
-					{
-						"Lifesteal"
-						{
-							"Target"		"CASTER"
-							"LifestealPercent"	"%lifesteal_pct"
-						}
-					}
+					"Center"			"TARGET"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
 		}
 	
-		"skeleton_king_mortal_strike_datadriven"
+		"OnSpellStart"
 		{
-			"BaseClass"				"ability_datadriven"
-			"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			"AbilityTextureName"	"skeleton_king_mortal_strike"
-		
-			"precache"
+			"FireSound"
 			{
-			"soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
-			"particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
-			"particle"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+				"EffectName"			"Hero_Antimage.ManaVoid"
+				"Target"
+				{
+					"Center"			"TARGET"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+				"EffectAttachType"		"attach_hitloc"
+				"Target"
+				{
+					"Center"			"TARGET"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+	
+				"ControlPoints"
+				{
+					"00"				"0 0 0"
+					"01"				"%mana_void_aoe_radius 0 0"
+				}
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_mana_void_ministun_datadriven"
+				"Target"		
+				{		
+					"Center"			"TARGET"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+				"Duration"				"%mana_void_ministun"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"			"scripts/vscripts/heroes/hero_antimage/mana_void.lua"
+				"Function"				"ManaVoid"
+				"Target"				"TARGET"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_mana_void_ministun_datadriven"
+			{
+				"IsDebuff"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	"antimage_spell_shield_datadriven"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"antimage_spell_shield"
+		
+		    "precache"
+	    {
+	        "soundfile"         		"soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+	        "particle"          		"particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+	        "particle"          		"particles/status_fx/status_effect_life_stealer_rage.vpcf"
+	    }
+	
+	    "AbilityCastPoint"              "0"
+	    "AbilityCastRange"              "0"
+	    
+	    "AbilityCooldown"               "2"
+	    "AbilityManaCost"               "75 75 75 75"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_shield_resistance"	"10 20 30 40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"              "2.0 2.0 2.0 2.0"
+			}
+	
+		}
+	
+		"OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    		"Hero_LifeStealer.Rage"
+	            "Target"        		"CASTER"
+	        }		
 			
+	        "RunScript"		
+	        {		
+	            "ScriptFile"    		"scripts/vscripts/heroes/hero_anti_mage/spell_shield.lua"
+	            "Function"        		"SpellImmune"
+	        }
+	
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  		"modifier_spell_block_ability"
+	            "Target"        		"CASTER"
+	            "Duration"      		"%duration"
+	        }
+	
+	    }
+	
+		"Modifiers"
+		{
+			"modifier_spell_shield_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%spell_shield_resistance"
+				}
 			}
+			"modifier_spell_block_ability"
+	        {
+	            "Passive"           	"0"
+	            "IsHidden"          	"0"
+	            "IsDebuff"          	"0"
+	
+	            "StatusEffectName"      "particles/status_fx/status_effect_life_stealer_rage.vpcf"        
+	            "StatusEffectPriority"  "10"
+	    
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "EffectName" 	"particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+	                    "EffectAttachType"  "attach_hitloc"
+	                    "Target"     	"CASTER"
+	                    "ControlPointEntities"
+	                    {
+	                        "CASTER"    "attach_hitloc"
+	                        "CASTER"    "attach_hitloc"
+	                        "CASTER"    "attach_hitloc"
+	                    }
+	                }
+	            }
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_MAGIC_IMMUNE"        "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+		}
+	}
+
+	--[[ PHANTOM ASSASSIN ]]
+	"phantom_assassin_phantom_strike_datadriven"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"phantom_assassin_phantom_strike"
+		"CastFilterRejectCaster" 		"1"
+	
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+		}
 		
-			"AbilityCooldown"				"11.0 9.0 7.0 5.0"
+		"AbilityCastRange"				"1000 1000 1000 1000"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	
+		"AbilityCooldown"				"14 11 8 5"
+		"AbilityDuration"				"3 3 3 3"
+		"AbilityManaCost"				"50 50 50 50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"130"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_max_attack_count" 	"4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"1000 1000 1000 1000"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"Blink"
+			{
+				"Target"				"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_PhantomAssassin.Strike.Start"
+				"Target"				"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_PhantomAssassin.Strike.End"
+				"Target"				"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"			"heroes/hero_phantom_assassin/phantom_strike.lua"
+				"Function"				"PhantomStrike"
+				"phantom_strike_modifier" 	"modifier_phantom_strike_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_phantom_strike_datadriven"
+			{
+				"IsBuff"	"1"
+	
+				"OnAttackLanded"
+				-- "%attack_damage" is set to the damage value before mitigation
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_assassin/phantom_strike.lua"
+						"Function"		"PhantomStrikeAttack"
+						"phantom_strike_modifier"	"modifier_phantom_strike_datadriven"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				}
+			}
+		}
+	}
+
+	--[[ PUGNA ]]
+
+	--[[ SKELETON KING ]]
+	"skeleton_king_hellfire_blast_datadriven"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"skeleton_king_hellfire_blast"
+		
+		"AbilityCastRange"				"525"
+		"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
+	
+		"AbilityCooldown"				"8.0 8.0 8.0 8.0"
+		"AbilityDamage"					"50 100 150 200"
+		"AbilityManaCost"				"140"
+		"AbilityModifierSupportValue"	"0.5"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_speed"			"1000"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"blast_stun_duration"	"2.0"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_slow"			"-20"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"blast_dot_duration"	"4"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_dot_damage"		"15 30 40 50"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_slow_duration"	"2"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+		}
+	
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+				"EffectAttachType"  	"start_at_customorigin"
 				
-			"AbilitySpecial"
-			{
-				"01"
+				"ControlPointEntities"
 				{
-					"var_type"				"FIELD_INTEGER"
-					"crit_multiplier"		"150 175 200 225"
-				}
-				"02"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"bonus_movespeed"		"-25 -25 -25 -25"
-				}
-				"03"
-				{
-					"var_type"				"FIELD_INTEGER"
-					"bonus_attackspeed"		"-25 -25 -25 -25"
-				}
-				"04"
-				{
-					"var_type"				"FIELD_FLOAT"
-					"duration"				"3.0 3.0 3.0 3.0"
+					"CASTER"			"attach_attack2"
 				}
 			}
-		
-			"Modifiers"
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
 			{
-		
+				"Target"           		"TARGET"
+				"EffectName"       		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+				"Dodgeable"        		"1"
+				"ProvidesVision"   		"0"
+				"VisionRadius"     		"0"
+				"MoveSpeed"        		"%blast_speed"
+				"SourceAttachment"  	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_SkeletonKing.Hellfire_Blast"
+				"Target"				"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_SkeletonKing.Hellfire_BlastImpact"
+				"Target"				"CASTER"
+			}
+	
+			"Damage"
+			{
+				"Target"				"TARGET"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Damage"				"%AbilityDamage"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_hellfire_blast_stun"
+				"Target"				"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_hellfire_blast_slow"
+				"Target"				"TARGET"
+			}
+	
+			"DelayedAction"
+			{
+				"Delay"					"%blast_stun_duration"
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_hellfire_blast_dot"
+						"Target"		"TARGET"
+					}
+				}
+			}
+			
+	
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"TARGET"
+	
+				-- CP3 needs to be attached to the target hit
+				"ControlPointEntities"
+				{
+					"TARGET"			"attach_hitloc"
+					"TARGET"			"attach_hitloc"
+					"TARGET"			"attach_hitloc"
+					"TARGET"			"attach_hitloc"
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_hellfire_blast_stun"
+			{
+				"IsDebuff"				"1"
+				"Duration"				"%blast_stun_duration"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+				"EffectName"			"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"		"follow_overhead"
+			}
+	
+			"modifier_hellfire_blast_slow"
+			{
+				"IsDebuff"				"1"
+				"Duration"				"%blast_dot_duration"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%blast_slow"
+				}
+	
+				"EffectName"			"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+			}
+	
+			"modifier_hellfire_blast_dot"
+			{
+				"IsHidden"				"1"
+				"Duration"				"%tooltip_slow_duration"
+	
+				"ThinkInterval"			"1"
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%blast_dot_damage"
+					}
+				}
+			}
+		}
+	}
+
+	"skeleton_king_mortal_strike_datadriven"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"skeleton_king_mortal_strike"
+	
+		"precache"
+		{
+		"soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+		"particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
+		"particle"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+		}
+	
+		"AbilityCooldown"				"11.0 9.0 7.0 5.0"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"crit_multiplier"		"150 175 200 225"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"-25 -25 -25 -25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attackspeed"		"-25 -25 -25 -25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 3.0 3.0 3.0"
+			}
+		}
+	
+		"Modifiers"
+		{
+	
 			"modifier_mortal_strike_datadriven"
 			{
 				"Passive"	"1"
@@ -695,13 +601,13 @@
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%crit_multiplier"
 				}
 	
-				"OnAttackLanded"
+				"OnAttackStart"
 				{
 	
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_mortal_strike_slow_datadriven"
-						"Target"	"TARGET"
+						"Target"		"TARGET"
 					}
 	
 					"FireEffect"
@@ -738,23 +644,24 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attackspeed"
 				}
 			}
+	
 		}
 	}
 
-	"sniper_take_aim_datadriven"
+	"skeleton_king_vampiric_aura_datadriven"
 	{
-			"BaseClass"					"ability_datadriven"
-			"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-			"AbilityType"				"DOTA_ABILITY_TYPE_BASIC"
-			"AbilityTextureName"		"sniper_take_aim"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityTextureName"			"skeleton_king_vampiric_aura"
 	
-			"AbilityCastPoint"			"0.4 0.4 0.4 0.4"
-			"AbilityCooldown"			"4.0 4.0 4.0 4.0"
-			"AbilityManaCost"			"25 25 25 25"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"AbilityCooldown"				"3.0 3.0 3.0 3.0"
+		"AbilityManaCost"				"25 25 25 25"
 	
 		"precache"
 		{
-	
+			"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
 		}
 	
 		"AbilitySpecial"
@@ -762,17 +669,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_range"	"1000 1000 1000 1000"
+				"lifesteal_pct"			"60 80 100 120"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"100 100 100 100"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"8.0 8.0 8.0 8.0"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.0 4.0 4.0"
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
 			}
 		}
 	
@@ -780,27 +687,54 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"			"modifier_take_aim_datadriven"
+				"ModifierName"			"modifier_vampiric_aura_datadriven"
 				"Target"				"CASTER"
 			}
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  			"CASTER"
+					"Radius" 			"%aura_radius"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 			"DOTA_UNIT_TARGET_BASIC"
+				}
+			
+				"Action"    
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_skeleton_king/vampiric_aura.lua"
+						"Function"		"VampiricAura"
+						"modifier"		"modifier_vampiric_aura_datadriven"
+					}
+				}
+			}
 		}
-		
+	
 		"Modifiers"
 		{
-			"modifier_take_aim_datadriven"
+			"modifier_vampiric_aura_datadriven"
 			{
-				"Duration"				"%duration"
-				"IsBuff"				"1"
-				
-				"Properties"
+				"Duration"	"%duration"
+				"IsBuff"	"1"
+	
+				"EffectName"			"particles/units/heroes/hero_broodmother/broodmother_hunger_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+	
+				"OnAttackLanded"
 				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%bonus_attack_range"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+					"Lifesteal"
+					{
+						"Target"		"CASTER"
+						"LifestealPercent"	"%lifesteal_pct"
+					}
 				}
 			}
 		}
 	}
-	
+
+	--[[ SNIPER ]]
 	"sniper_assassinate_datadriven"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -817,36 +751,36 @@
 		"AbilityCastRange"				"2000 2500 3000"
 		"AbilityCastRangeBuffer"		"600"
 		"AbilityCastPoint"				"2.0 2.0 2.0"
-	
-		"AbilityCooldown"				"5.0 5.0 5.0"
-	
-		"AbilityDamage"					"200 350 500"
-	
-		"AbilityManaCost"				"175 275 375"
 		
-		"AbilityModifierSupportValue"	"0.0"	// Modifier just does damage
+		"AbilityCooldown"				"5.0 5.0 5.0"
+		
+		"AbilityDamage"					"200 350 500"
+		
+		"AbilityManaCost"				"175 275 375"
+			
+		"AbilityModifierSupportValue"	"0.0"	-- Modifier just does damage
 	
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"2500 2500 2500"
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"2500 2500 2500"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ability_damage"			"200 350 500"
+				"var_type"				"FIELD_INTEGER"
+				"ability_damage"		"200 350 500"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"charge_time"				"2.0"
+				"var_type"				"FIELD_FLOAT"
+				"charge_time"			"2.0"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"debuff_duration"			"4.0"
+				"var_type"				"FIELD_FLOAT"
+				"debuff_duration"		"4.0"
 			}
 		}
 		
@@ -894,18 +828,18 @@
 		
 			"TrackingProjectile"
 			{
-				"Target"					"TARGET"
-				"EffectName"				"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
-				"Dodgeable"					"1"
-				"ProvidesVision"			"0"
-				"MoveSpeed"					"%projectile_speed"
-				"SourceAttachment"			"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"0"
+				"MoveSpeed"				"%projectile_speed"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
 			}
 			
 			"FireSound"
 			{
-				"Target"					"CASTER"
-				"EffectName"				"Hero_Sniper.AssassinateProjectile"
+				"Target"				"CASTER"
+				"EffectName"			"Hero_Sniper.AssassinateProjectile"
 			}
 		}
 		
@@ -913,20 +847,20 @@
 		{
 			"FireSound"
 			{
-				"Target"					"TARGET"
-				"EffectName"				"Hero_Sniper.AssassinateDamage"
+				"Target"				"TARGET"
+				"EffectName"			"Hero_Sniper.AssassinateDamage"
 			}
 		
 			"RunScript"
 			{
-				"ScriptFile"				"heroes/hero_sniper/assassinate.lua"
-				"Function"					"CalculateDamage"
+				"ScriptFile"			"heroes/hero_sniper/assassinate.lua"
+				"Function"				"CalculateDamage"
 			}
 			
 			"RemoveModifier"
 			{
-				"Target"					"TARGET"
-				"ModifierName"				"modifier_assassinate_target_datadriven"
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_assassinate_target_datadriven"
 			}
 		}
 		
@@ -934,20 +868,20 @@
 		{
 			"modifier_assassinate_caster_datadriven"
 			{
-				"Duration"					"%charge_time"
+				"Duration"				"%charge_time"
 			
 				"OnOrder"
 				{
 					"RemoveModifier"
 					{
-						"Target"			"CASTER"
-						"ModifierName"		"modifier_assassinate_caster_datadriven"
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_assassinate_caster_datadriven"
 					}
 					
 					"RunScript"
 					{
-						"ScriptFile"		"heroes/hero_sniper/assassinate.lua"
-						"Function"			"assassinate_remove_target"
+						"ScriptFile"	"heroes/hero_sniper/assassinate.lua"
+						"Function"		"assassinate_remove_target"
 					}
 				}
 			}
@@ -970,4 +904,64 @@
 			}
 		}
 	}
+
+	"sniper_take_aim_datadriven"
+	{
+			"BaseClass"					"ability_datadriven"
+			"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+			"AbilityType"				"DOTA_ABILITY_TYPE_BASIC"
+			"AbilityTextureName"		"sniper_take_aim"
+	
+			"AbilityCastPoint"			"0.4 0.4 0.4 0.4"
+			"AbilityCooldown"			"4.0 4.0 4.0 4.0"
+			"AbilityManaCost"			"25 25 25 25"
+	
+		"precache"
+		{
+		}
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_range"	"1000 1000 1000 1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"100 100 100 100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.0 4.0 4.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_take_aim_datadriven"
+				"Target"				"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_take_aim_datadriven"
+			{
+				"Duration"				"%duration"
+				"IsBuff"				"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%bonus_attack_range"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
+				}
+			}
+		}
+	}
+
 }

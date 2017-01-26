@@ -1,209 +1,209 @@
-	"skeleton_king_hellfire_blast_datadriven"
+"skeleton_king_hellfire_blast_datadriven"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"skeleton_king_hellfire_blast"
+	
+	"AbilityCastRange"				"525"
+	"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
+
+	"AbilityCooldown"				"8.0 8.0 8.0 8.0"
+	"AbilityDamage"					"50 100 150 200"
+	"AbilityManaCost"				"140"
+	"AbilityModifierSupportValue"	"0.5"
+
+	"AbilitySpecial"
 	{
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"skeleton_king_hellfire_blast"
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"blast_speed"			"1000"
+		}
 		
-		"AbilityCastRange"				"525"
-		"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
-	
-		"AbilityCooldown"				"8.0 8.0 8.0 8.0"
-		"AbilityDamage"					"50 100 150 200"
-		"AbilityManaCost"				"140"
-		"AbilityModifierSupportValue"	"0.5"
-	
-		"AbilitySpecial"
+		"02"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blast_speed"			"1000"
-			}
+			"var_type"				"FIELD_FLOAT"
+			"blast_stun_duration"	"2.0"
+		}
+		
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"blast_slow"			"-20"
+		}
+		
+		"04"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"blast_dot_duration"	"4"
+		}
+		
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"blast_dot_damage"		"15 30 40 50"
+		}
+		
+		"06"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"tooltip_slow_duration"	"2"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+		"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+		"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+		"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+		"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+	}
+
+	"OnAbilityPhaseStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+			"EffectAttachType"  	"start_at_customorigin"
 			
-			"02"
+			"ControlPointEntities"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"blast_stun_duration"	"2.0"
-			}
-			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blast_slow"			"-20"
-			}
-			
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"blast_dot_duration"	"4"
-			}
-			
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blast_dot_damage"		"15 30 40 50"
-			}
-			
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tooltip_slow_duration"	"2"
+				"CASTER"			"attach_attack2"
 			}
 		}
-	
-		"precache"
+	}
+
+	"OnSpellStart"
+	{
+		"TrackingProjectile"
 		{
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
-			"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
-			"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
-			"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
-			"particle"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+			"Target"           		"TARGET"
+			"EffectName"       		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+			"Dodgeable"        		"1"
+			"ProvidesVision"   		"0"
+			"VisionRadius"     		"0"
+			"MoveSpeed"        		"%blast_speed"
+			"SourceAttachment"  	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
 		}
-	
-		"OnAbilityPhaseStart"
+
+		"FireSound"
 		{
-			"FireEffect"
+			"EffectName"			"Hero_SkeletonKing.Hellfire_Blast"
+			"Target"				"CASTER"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"DeleteOnHit"				"1"
+
+		"FireSound"
+		{
+			"EffectName"			"Hero_SkeletonKing.Hellfire_BlastImpact"
+			"Target"				"CASTER"
+		}
+
+		"Damage"
+		{
+			"Target"				"TARGET"
+			"Type"					"DAMAGE_TYPE_MAGICAL"
+			"Damage"				"%AbilityDamage"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"			"modifier_hellfire_blast_stun"
+			"Target"				"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"			"modifier_hellfire_blast_slow"
+			"Target"				"TARGET"
+		}
+
+		"DelayedAction"
+		{
+			"Delay"					"%blast_stun_duration"
+			"Action"
 			{
-				"EffectName"        "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-				
-				"ControlPointEntities"
+				"ApplyModifier"
 				{
-					"CASTER"		"attach_attack2"
+					"ModifierName"	"modifier_hellfire_blast_dot"
+					"Target"		"TARGET"
 				}
 			}
 		}
-	
-		"OnSpellStart"
+		
+
+		"FireEffect"
 		{
-			"TrackingProjectile"
+			"EffectName"			"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+			"EffectAttachType"		"follow_origin"
+			"Target"				"TARGET"
+
+			-- CP3 needs to be attached to the target hit
+			"ControlPointEntities"
 			{
-				"Target"           	"TARGET"
-				"EffectName"       	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
-				"Dodgeable"        	"1"
-				"ProvidesVision"   	"0"
-				"VisionRadius"     	"0"
-				"MoveSpeed"        	"%blast_speed"
-				"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"		"Hero_SkeletonKing.Hellfire_Blast"
-				"Target"			"CASTER"
+				"TARGET"			"attach_hitloc"
+				"TARGET"			"attach_hitloc"
+				"TARGET"			"attach_hitloc"
+				"TARGET"			"attach_hitloc"
 			}
 		}
-	
-		"OnProjectileHitUnit"
+	}
+
+	"Modifiers"
+	{
+		"modifier_hellfire_blast_stun"
 		{
-			"DeleteOnHit"			"1"
-	
-			"FireSound"
+			"IsDebuff"				"1"
+			"Duration"				"%blast_stun_duration"
+			"States"
 			{
-				"EffectName"	"Hero_SkeletonKing.Hellfire_BlastImpact"
-				"Target"		"CASTER"
+				"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 			}
-	
-			"Damage"
-			{
-				"Target"		"TARGET"
-				"Type"			"DAMAGE_TYPE_MAGICAL"
-				"Damage"		 "%AbilityDamage"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_hellfire_blast_stun"
-				"Target"		"TARGET"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_hellfire_blast_slow"
-				"Target"		"TARGET"
-			}
-	
-			"DelayedAction"
-			{
-				"Delay"			"%blast_stun_duration"
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_hellfire_blast_dot"
-						"Target"		"TARGET"
-					}
-				}
-			}
-			
-	
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"TARGET"
-	
-				//CP3 needs to be attached to the target hit
-				"ControlPointEntities"
-				{
-					"TARGET"		"attach_hitloc"
-					"TARGET"		"attach_hitloc"
-					"TARGET"		"attach_hitloc"
-					"TARGET"		"attach_hitloc"
-				}
-			}
+
+			"OverrideAnimation"		"ACT_DOTA_DISABLED"
+			"EffectName"			"particles/generic_gameplay/generic_stunned.vpcf"
+			"EffectAttachType"		"follow_overhead"
 		}
-	
-		"Modifiers"
+
+		"modifier_hellfire_blast_slow"
 		{
-			"modifier_hellfire_blast_stun"
+			"IsDebuff"				"1"
+			"Duration"				"%blast_dot_duration"
+
+			"Properties"
 			{
-				"IsDebuff"			"1"
-				"Duration"			"%blast_stun_duration"
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-	
-				"OverrideAnimation"	"ACT_DOTA_DISABLED"
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%blast_slow"
 			}
-	
-			"modifier_hellfire_blast_slow"
+
+			"EffectName"			"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+			"EffectAttachType"		"follow_origin"
+		}
+
+		"modifier_hellfire_blast_dot"
+		{
+			"IsHidden"				"1"
+			"Duration"				"%tooltip_slow_duration"
+
+			"ThinkInterval"			"1"
+			"OnIntervalThink"
 			{
-				"IsDebuff"			"1"
-				"Duration"			"%blast_dot_duration"
-	
-				"Properties"
+				"Damage"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%blast_slow"
-				}
-	
-				"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-			}
-	
-			"modifier_hellfire_blast_dot"
-			{
-				"IsHidden"	"1"
-				"Duration"	"%tooltip_slow_duration"
-	
-				"ThinkInterval"		"1"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%blast_dot_damage"
-					}
+					"Target"		"TARGET"
+					"Type"			"DAMAGE_TYPE_MAGICAL"
+					"Damage"		"%blast_dot_damage"
 				}
 			}
 		}
 	}
+}

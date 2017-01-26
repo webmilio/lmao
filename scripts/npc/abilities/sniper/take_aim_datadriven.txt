@@ -1,30 +1,29 @@
 "sniper_take_aim_datadriven"
 {
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityTextureName"			"sniper_take_aim"
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"				"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityTextureName"		"sniper_take_aim"
 
-		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
-		"AbilityCooldown"				"4.0 4.0 4.0 4.0"
-		"AbilityManaCost"				"25 25 25 25"
+		"AbilityCastPoint"			"0.4 0.4 0.4 0.4"
+		"AbilityCooldown"			"4.0 4.0 4.0 4.0"
+		"AbilityManaCost"			"25 25 25 25"
 
 	"precache"
 	{
-
 	}
 
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"bonus_attack_range"			"1000 1000 1000 1000"
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_range"	"1000 1000 1000 1000"
 		}
 		"02"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"bonus_attack_speed"			"100 100 100 100"
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed"	"100 100 100 100"
 		}
 		"03"
 		{
@@ -37,8 +36,8 @@
 	{
 		"ApplyModifier"
 		{
-			"ModifierName"	"modifier_take_aim_datadriven"
-			"Target"		"CASTER"
+			"ModifierName"			"modifier_take_aim_datadriven"
+			"Target"				"CASTER"
 		}
 	}
 	
@@ -46,8 +45,8 @@
 	{
 		"modifier_take_aim_datadriven"
 		{
-			"Duration"			"%duration"
-			"IsBuff"			"1"
+			"Duration"				"%duration"
+			"IsBuff"				"1"
 			
 			"Properties"
 			{

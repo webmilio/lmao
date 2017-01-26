@@ -1,45 +1,33 @@
 "antimage_spell_shield_datadriven"
 {
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
+	"BaseClass"						"ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	"AbilityTextureName"			"antimage_spell_shield"
 	
 	    "precache"
     {
-        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
-        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
-        "particle"          "particles/status_fx/status_effect_life_stealer_rage.vpcf"
+        "soundfile"         		"soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
+        "particle"          		"particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+        "particle"          		"particles/status_fx/status_effect_life_stealer_rage.vpcf"
     }
 
-
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
     "AbilityCastPoint"              "0"
     "AbilityCastRange"              "0"
     
-    // Time     
-    //-------------------------------------------------------------------------------------------------------------
     "AbilityCooldown"               "2"
-    
-    // Cost
-    //-------------------------------------------------------------------------------------------------------------
     "AbilityManaCost"               "75 75 75 75"
-
-	// Special
-	//-------------------------------------------------------------------------------------------------------------
+	
 	"AbilitySpecial"
 	{
 		"01"
 		{
-			"var_type"						"FIELD_INTEGER"
-			"spell_shield_resistance"		"10 20 30 40"
+			"var_type"				"FIELD_INTEGER"
+			"spell_shield_resistance"	"10 20 30 40"
 		}
 		"02"
 		{
-			"var_type"						"FIELD_FLOAT"
-			"duration"              		"2.0 2.0 2.0 2.0"
+			"var_type"				"FIELD_FLOAT"
+			"duration"              "2.0 2.0 2.0 2.0"
 		}
 
 	}
@@ -48,21 +36,21 @@
     {
         "FireSound"
         {
-            "EffectName"    "Hero_LifeStealer.Rage"
-            "Target"        "CASTER"
-        }
-
-        "RunScript"
-        {
-            "ScriptFile"    "scripts/vscripts/heroes/hero_anti_mage/spell_shield.lua"
-            "Function"        "SpellImmune"
+            "EffectName"    		"Hero_LifeStealer.Rage"
+            "Target"        		"CASTER"
+        }		
+		
+        "RunScript"		
+        {		
+            "ScriptFile"    		"scripts/vscripts/heroes/hero_anti_mage/spell_shield.lua"
+            "Function"        		"SpellImmune"
         }
 
         "ApplyModifier"
         {
-            "ModifierName"  "modifier_spell_block_ability"
-            "Target"        "CASTER"
-            "Duration"      "%duration"
+            "ModifierName"  		"modifier_spell_block_ability"
+            "Target"        		"CASTER"
+            "Duration"      		"%duration"
         }
 
     }
@@ -71,8 +59,8 @@
 	{
 		"modifier_spell_shield_datadriven"
 		{
-			"Passive"	"1"
-			"IsHidden"	"1"
+			"Passive"				"1"
+			"IsHidden"				"1"
 
 			"Properties"
 			{
@@ -85,21 +73,21 @@
             "IsHidden"          	"0"
             "IsDebuff"          	"0"
 
-            "StatusEffectName"         "particles/status_fx/status_effect_life_stealer_rage.vpcf"        
-            "StatusEffectPriority"  	"10"
+            "StatusEffectName"      "particles/status_fx/status_effect_life_stealer_rage.vpcf"        
+            "StatusEffectPriority"  "10"
     
             "OnCreated"
             {
                 "AttachEffect"
                 {
-                    "EffectName"        "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
+                    "EffectName" 	"particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
                     "EffectAttachType"  "attach_hitloc"
-                    "Target"            "CASTER"
+                    "Target"     	"CASTER"
                     "ControlPointEntities"
                     {
-                        "CASTER"    	"attach_hitloc"
-                        "CASTER"    	"attach_hitloc"
-                        "CASTER"    	"attach_hitloc"
+                        "CASTER"    "attach_hitloc"
+                        "CASTER"    "attach_hitloc"
+                        "CASTER"    "attach_hitloc"
                     }
                 }
             }
