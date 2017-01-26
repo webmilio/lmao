@@ -1,7 +1,7 @@
 "DOTAAbilities"
 {
 
-	// ANTIMAGE
+	--[[ ANTIMAGE ]]
 	"antimage_mana_void_datadriven"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -29,7 +29,7 @@
 	
 		"AbilityManaCost"				"125 200 275"
 	
-		"AbilityModifierSupportValue"	"0.0"	// damage only
+		"AbilityModifierSupportValue"	"0.0"	-- damage only
 		
 		"AbilitySpecial"
 		{
@@ -233,7 +233,7 @@
 		}
 	}
 
-	// PHANTOM ASSASSIN 
+	--[[ PHANTOM ASSASSIN ]]
 	"phantom_assassin_phantom_strike_datadriven"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -318,7 +318,7 @@
 				"IsBuff"	"1"
 	
 				"OnAttackLanded"
-				// "%attack_damage" is set to the damage value before mitigation
+				-- "%attack_damage" is set to the damage value before mitigation
 				{
 					"RunScript"
 					{
@@ -336,9 +336,9 @@
 		}
 	}
 
-	// PUGNA 
+	--[[ PUGNA ]]
 
-	// SKELETON KING 
+	--[[ SKELETON KING ]]
 	"skeleton_king_hellfire_blast_datadriven"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -489,7 +489,7 @@
 				"EffectAttachType"		"follow_origin"
 				"Target"				"TARGET"
 	
-				// CP3 needs to be attached to the target hit
+				-- CP3 needs to be attached to the target hit
 				"ControlPointEntities"
 				{
 					"TARGET"			"attach_hitloc"
@@ -734,7 +734,7 @@
 		}
 	}
 
-	// SNIPER 
+	--[[ SNIPER ]]
 	"sniper_assassinate_datadriven"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -758,7 +758,7 @@
 		
 		"AbilityManaCost"				"175 275 375"
 			
-		"AbilityModifierSupportValue"	"0.0"	// Modifier just does damage
+		"AbilityModifierSupportValue"	"0.0"	-- Modifier just does damage
 	
 		"AbilitySpecial"
 		{

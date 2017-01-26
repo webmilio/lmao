@@ -25,7 +25,7 @@
 
 	"AbilityManaCost"				"125 200 275"
 
-	"AbilityModifierSupportValue"	"0.0"	-- damage only
+	"AbilityModifierSupportValue"	"0.0"	// damage only
 	
 	"AbilitySpecial"
 	{

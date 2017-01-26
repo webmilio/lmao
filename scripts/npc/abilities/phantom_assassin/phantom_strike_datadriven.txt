@@ -82,7 +82,7 @@
 			"IsBuff"	"1"
 
 			"OnAttackLanded"
-			-- "%attack_damage" is set to the damage value before mitigation
+			// "%attack_damage" is set to the damage value before mitigation
 			{
 				"RunScript"
 				{

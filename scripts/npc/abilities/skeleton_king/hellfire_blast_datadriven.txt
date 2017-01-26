@@ -148,7 +148,7 @@
 			"EffectAttachType"		"follow_origin"
 			"Target"				"TARGET"
 
-			-- CP3 needs to be attached to the target hit
+			// CP3 needs to be attached to the target hit
 			"ControlPointEntities"
 			{
 				"TARGET"			"attach_hitloc"
