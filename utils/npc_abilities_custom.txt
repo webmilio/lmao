@@ -233,12 +233,6 @@
 		}
 	}
 
-	// BLOODSEEKER
-	// BOUNTY HUNTER
-	// CLINKZ
-	// DROW RANGER
-	// GYROCOPTER
-	// LIFESTEALER
 	// NIGHT STALKER
 	"night_stalker_crippling_fear_datadriven"
 	{
@@ -607,9 +601,6 @@
 		}
 	}
 
-	// PUGNA
-
-	// RIKI
 	// SKELETON KING
 	"skeleton_king_hellfire_blast_datadriven"
 	{
@@ -1006,7 +997,6 @@
 		}
 	}
 
-	// SLARK
 	// SNIPER
 	"sniper_assassinate_datadriven"
 	{
@@ -1237,5 +1227,4 @@
 		}
 	}
 
-	// URSA
 }
