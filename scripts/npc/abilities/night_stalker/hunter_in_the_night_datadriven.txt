@@ -1,7 +1,7 @@
 "night_stalker_hunter_in_the_night_datadriven"
 {
 	"BaseClass"				        "ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"AbilityTextureName"			"night_stalker_hunter_in_the_night"
 	
 	    "precache"
@@ -31,7 +31,7 @@
         "02"
         {
             "var_type"                                  "FIELD_INTEGER"
-            "bonus_movement_speed_pct_night"            "20 30 40 50"
+            "bonus_movement_speed_pct_night"            "10 15 20 25"
         }
         "03"
         {
@@ -52,6 +52,12 @@
             "EffectName"    "Hero_LifeStealer.Rage"
             "Target"        "CASTER"
         }
+        "FireEffect"
+                {
+                    "EffectName"        "particles/items2_fx/phase_boots_b.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target"            "CASTER"
+                }
         "RunScript"
         {
             "ScriptFile"        "scripts/vscripts/heroes/hero_night_stalker/hunter_in_the_night.lua"
@@ -123,8 +129,6 @@
             "IsBuff"                "1"
             "Duration"              "%duration"
 
-            "EffectName"            "particles/items2_fx/phase_boots_b.vpcf"
-            "EffectAttachType"      "follow_origin"
 
             "Properties"
             {
@@ -140,9 +144,6 @@
         {
             "IsBuff"                "1"
             "Duration"              "%duration"
-
-            "EffectName"            "particles/items2_fx/phase_boots_b.vpcf"
-            "EffectAttachType"      "follow_origin"
 
             "Properties"
             {

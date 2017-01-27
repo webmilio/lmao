@@ -1,0 +1,93 @@
+"bloodrage_datadriven"
+{
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+	"FightRecapLevel"				"1"
+	"AbilityTextureName"			"bloodseeker_bloodrage"
+	
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodrage.vpcf"
+		"soundfile"			"sounds/weapons/hero/bloodseeker/rage.vsnd"
+	}
+	"AbilityCastPoint"				"0.2"
+	"AbilityCooldown"				"4 4 4 4"
+	"AbilityManaCost"				"0"		
+	"AbilityCastRange"				"800"
+	"AbilityModifierSupportValue"	"0.1"	// Primarily about the damage
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"4 4 4 4"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"damage_increase_pct"		"25 30 35 40"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"health_bonus_pct"			"19 21 23 25"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_blood_rage_datadriven"
+			"Target"		"TARGET"
+		}
+		
+		"FireSound"
+		{
+			"Target"					"TARGET"
+			"EffectName"				"Hero_Bloodseeker.Rage"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_blood_rage_datadriven"
+		{
+			"Duration"	"%duration"
+			
+			"EffectName"	"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodrage.vpcf"
+			"EffectAttachType"	"attach_origin"
+			
+			"OnKill"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_bloodseeker/bloodrage.lua"
+					"Function"		"HealKiller"
+					"modifier"		"modifier_blood_rage_datadriven"
+				}
+			}
+			
+			"OnDeath"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_bloodseeker/bloodrage.lua"
+					"Function"		"HealKiller"
+				}
+			}
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_increase_pct"
+				"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_increase_pct"
+			}
+		}
+	}
+}
