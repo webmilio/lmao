@@ -234,7 +234,7 @@
 	}
 
 	// BLOODSEEKER
-	"bloodrage_datadriven"
+	"bloodseeker_bloodrage_datadriven"
 	{
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
