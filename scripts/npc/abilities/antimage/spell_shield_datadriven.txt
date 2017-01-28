@@ -21,13 +21,13 @@
 	{
 		"01"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"spell_shield_resistance"	"10 20 30 40"
+			"var_type"				       "FIELD_INTEGER"
+			"spell_shield_resistance"	   "10 20 30 40"
 		}
 		"02"
 		{
-			"var_type"				"FIELD_FLOAT"
-			"duration"              "2.0 2.0 2.0 2.0"
+			"var_type"				       "FIELD_FLOAT"
+			"duration"                     "2.0 2.0 2.0 2.0"
 		}
 
 	}

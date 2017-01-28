@@ -9,10 +9,6 @@
         "particle"          "particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
         "particle"          "particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
         "particle"	        "particles/items2_fx/phase_boots_b.vpcf"
-
-        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
-        "particle"          "particles/units/heroes/hero_life_stealer/life_stealer_rage.vpcf"
-        "particle"          "particles/status_fx/status_effect_life_stealer_rage.vpcf"
     }
 
     "AbilityCastPoint"              "0.3 0.3 0.3 0.3"

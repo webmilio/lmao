@@ -1,4 +1,5 @@
-function HealKiller( keys )
+--Does not currently work on other players
+function HealKiller(keys)
 	local caster = keys.caster
 	local target = keys.unit
 	local attacker = keys.attacker
@@ -9,12 +10,15 @@ function HealKiller( keys )
 	if caster:IsAlive() then
 		local target_health = target:GetMaxHealth()
 		local heal = target_health * health_bonus_pct
+		local refresh_buff_time = caster:FindModifierByName(modifier):GetRemainingTime() + 3
 		caster:Heal(heal, caster)
-		ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
+		if target:IsHero() then
+			caster:RemoveModifierByName(modifier)
+			ability:ApplyDataDrivenModifier(caster, caster, modifier, {Duration = refresh_buff_time})
+		end
 	else
 		local caster_health = caster:GetMaxHealth()
 		local heal = caster_health * health_bonus_pct
 		attacker:Heal(heal, caster)
-		ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
 	end
 end

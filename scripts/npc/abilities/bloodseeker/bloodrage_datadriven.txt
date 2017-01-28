@@ -1,7 +1,7 @@
-"bloodrage_datadriven"
+"bloodseeker_bloodrage_datadriven"
 {
 	"BaseClass"				"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -15,10 +15,15 @@
 		"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodrage.vpcf"
 		"soundfile"			"sounds/weapons/hero/bloodseeker/rage.vsnd"
 	}
-	"AbilityCastPoint"				"0.2"
-	"AbilityCooldown"				"4 4 4 4"
+
+	"AbilityCastPoint"				"0.3"
+
+	"AbilityCooldown"				"13 12 11 10"
+
 	"AbilityManaCost"				"0"		
+	
 	"AbilityCastRange"				"800"
+	
 	"AbilityModifierSupportValue"	"0.1"	// Primarily about the damage
 
 	"AbilitySpecial"
@@ -26,20 +31,25 @@
 		"01"
 		{
 			"var_type"					"FIELD_FLOAT"
-			"duration"					"4 4 4 4"
+			"duration"					"7.0 8.0 9.0 10.0"
 		}
 		"02"
 		{
-			"var_type"					"FIELD_INTEGER"
-			"damage_increase_pct"		"25 30 35 40"
+			"var_type"					"FIELD_FLOAT"
+			"refresh_duration"			"3.0 3.0 3.0 3.0"
 		}
 		"03"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"health_bonus_pct"			"19 21 23 25"
+			"damage_increase_pct"		"25 30 35 40"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"health_bonus_pct"			"19 20 21 22"
 		}
 	}
-
+	
 	"OnSpellStart"
 	{
 		"ApplyModifier"
@@ -60,6 +70,7 @@
 		"modifier_blood_rage_datadriven"
 		{
 			"Duration"	"%duration"
+			"IsBuff"	"1"
 			
 			"EffectName"	"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodrage.vpcf"
 			"EffectAttachType"	"attach_origin"
@@ -80,6 +91,7 @@
 				{
 					"ScriptFile"	"heroes/hero_bloodseeker/bloodrage.lua"
 					"Function"		"HealKiller"
+					"modifier"		"modifier_blood_rage_datadriven"
 				}
 			}
 			
