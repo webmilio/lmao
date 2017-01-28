@@ -39,3 +39,4 @@ luac.out
 *.hex
 *.lnk
 
+utils/npc_abilities_custom.txt
