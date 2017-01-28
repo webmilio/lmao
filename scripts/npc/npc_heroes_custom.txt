@@ -16,6 +16,7 @@
 		"Ability1"					"bloodseeker_bloodrage_datadriven"	// Ability 1
 	}
 
+	"npc_dota_hero_clinkz_datadriven"
 	{
 		"override_hero"				"npc_dota_hero_clinkz"				// Hero to override
 		"Ability1"					"clinkz_strafe_datadriven"	// Ability 1
