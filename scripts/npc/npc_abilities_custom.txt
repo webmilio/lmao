@@ -341,6 +341,94 @@
 	}
 
 	// CLINKZ
+	"clinkz_death_pact_datadriven"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"clinkz_death_pact"
+	
+		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCooldown"				"70 50 30"
+		"AbilityManaCost"				"150 150 150"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pact_duration"			"90.0 90.0 90.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"spell_duration"		"10.0 10.0 10.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_pct"				"50 65 80"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_gain_pct"		"5.0 6.5 8.0"
+			}
+		}
+	
+		"precache"
+		{
+			"particle" 	"particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Clinkz.DeathPact.Cast"
+				"Target" 		"CASTER"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_death_pact_datadriven"
+				"Target" 		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_death_pact_datadriven"
+			{
+				"Duration"		"%spell_duration"
+				"IsBuff"		"1"
+	
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_clinkz/death_pact.lua"
+						"Function"			"DeathPact"
+						"modifier"			"modifier_death_pact_buff_datadriven"
+						"modifier_spell"	"modifier_death_pact_datadriven"
+					}
+				}
+			}
+	
+			"modifier_death_pact_buff_datadriven"
+			{
+				"Duration"			"%pact_duration"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "1"
+				}
+			}
+		}
+	}
+
 	"clinkz_searing_arrows_datadriven"
 	{
 		"BaseClass"				"ability_datadriven"
