@@ -1,5 +1,5 @@
 # lmao
 
-* Beginner's Guide to Scripting : https://moddota.com/forums/discussion/135/beginners-guide-to-dota-scripting
+* Modding Ressources :            https://moddota.com/forums/tutorial-index
 * Scripting API :                 https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/API
 * SpellLibrary :                  https://github.com/Pizzalol/SpellLibrary
