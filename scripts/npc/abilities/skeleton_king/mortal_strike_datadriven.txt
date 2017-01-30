@@ -11,39 +11,32 @@
 	"particle"	"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
 	}
 
-	"AbilityCooldown"				"11.0 9.0 7.0 5.0"
+	"AbilityCooldown"				"4.0 4.0 4.0 4.0"
 		
 	"AbilitySpecial"
 	{
 		"01"
 		{
 			"var_type"				"FIELD_INTEGER"
-			"crit_multiplier"		"150 175 200 225"
+			"crit_multiplier"		"325 350 375 400"
 		}
-		"02"
+	}
+
+	"OnUpgrade"
+	{
+		"RunScript"
 		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_movespeed"		"-25 -25 -25 -25"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_attackspeed"		"-25 -25 -25 -25"
-		}
-		"04"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"duration"				"3.0 3.0 3.0 3.0"
+			"ScriptFile"	"scripts/vscripts/heroes/hero_skeleton_king/mortal_strike.lua"	
+			"Function"		"CheckUpgrade"
+			"modifier"		"modifier_mortal_strike_datadriven"
 		}
 	}
 
 	"Modifiers"
 	{
-
 		"modifier_mortal_strike_datadriven"
 		{
-			"Passive"	"1"
-			"IsHidden"	"1"
+			"IsHidden"	"0"
 
 			"Properties"
 			{
@@ -52,19 +45,12 @@
 
 			"OnAttackStart"
 			{
-
-				"ApplyModifier"
-				{
-					"ModifierName"	"modifier_mortal_strike_slow_datadriven"
-					"Target"		"TARGET"
-				}
-
 				"FireEffect"
-				{
-					"EffectName"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
-					"EffectAttachType"	"attach_hitloc"
-					"Target"		"TARGET"
-				}
+		        {
+		       		"EffectName" 		"particles/units/heroes/hero_skeletonking/skeleton_king_weapon_blur_critical.vpcf"
+		            "EffectAttachType"  "follow_origin"
+		            "Target"    		"CASTER"
+		        }
 
 				"FireSound"
 				{
@@ -75,24 +61,20 @@
 				"RunScript"
 				{
 					"ScriptFile"	"scripts/vscripts/heroes/hero_skeleton_king/mortal_strike.lua"	
-					"Function"		"MortalStrike"						
+					"Function"		"CheckAttackStart"
+					"modifier"		"modifier_mortal_strike_datadriven"					
+				}
+			}
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_skeleton_king/mortal_strike.lua"	
+					"Function"		"MortalStrike"
+					"modifier"		"modifier_mortal_strike_datadriven"					
 				}
 			}
 		}
-
-		"modifier_mortal_strike_slow_datadriven"
-		{
-			"IsDebuff"				"1"
-			"Duration"				"%duration"
-			"StatusEffectName"		"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
-			"StatusEffectPriority"	"3"
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movespeed"
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attackspeed"
-			}
-		}
-
 	}
 }
