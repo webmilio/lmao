@@ -852,103 +852,89 @@
 	}
 
 	// PHANTOM ASSASSIN
-	"phantom_assassin_phantom_strike_datadriven"
+	"phantom_assassin_coup_de_grace_datadriven"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"phantom_assassin_phantom_strike"
-		"CastFilterRejectCaster" 		"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"phantom_assassin_coup_de_grace"
 	
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
-			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
 		}
-		
-		"AbilityCastRange"				"1000 1000 1000 1000"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 	
-		"AbilityCooldown"				"14 11 8 5"
-		"AbilityDuration"				"3 3 3 3"
-		"AbilityManaCost"				"50 50 50 50"
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"130"
+				"var_type"					"FIELD_INTEGER"
+				"crit_damage"				"300 400 500"
 			}
-			
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_max_attack_count" 	"4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"1000 1000 1000 1000"
+				"var_type"					"FIELD_FLOAT"
+				"charge_distance"			"30 30 30"
 			}
 		}
 	
-		"OnSpellStart"
-		{
-			"Blink"
-			{
-				"Target"				"TARGET"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"			"Hero_PhantomAssassin.Strike.Start"
-				"Target"				"CASTER"
-			}
-	
-			"AttachEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"			"Hero_PhantomAssassin.Strike.End"
-				"Target"				"CASTER"
-			}
-	
-			"RunScript"
-			{
-				"ScriptFile"			"heroes/hero_phantom_assassin/phantom_strike.lua"
-				"Function"				"PhantomStrike"
-				"phantom_strike_modifier" 	"modifier_phantom_strike_datadriven"
-			}
-		}
+		
 	
 		"Modifiers"
 		{
-			"modifier_phantom_strike_datadriven"
+			"modifier_coup_de_grace_datadriven"
 			{
-				"IsBuff"	"1"
+				"Passive"			"1"
+				"ThinkInterval"		"0.25"
 	
-				"OnAttackLanded"
-				// "%attack_damage" is set to the damage value before mitigation
+				"OnIntervalThink"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_phantom_assassin/phantom_strike.lua"
-						"Function"		"PhantomStrikeAttack"
-						"phantom_strike_modifier"	"modifier_phantom_strike_datadriven"
+						"ScriptFile"		"heroes/hero_phantom_assassin/coup_de_grace.lua"
+						"Function"			"DistanceCheck"
+						"modifier"			"modifier_coup_de_grace_datadriven"
+						"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
 					}
 				}
+			}
 	
+			"modifier_coup_de_grace_crit_datadriven"
+			{
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_damage"
+				}
+	
+				"OnAttackLanded"
+				{
+					"FireEffect"
+					{
+						"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
+						"EffectAttachType"		"follow_origin"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"			"follow_origin"
+							"TARGET"			"follow_origin"
+						}
+					}
+	
+					"FireSound"
+					{
+						"EffectName"			"Hero_PhantomAssassin.CoupDeGrace"
+						"Target"				"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phantom_assassin/coup_de_grace.lua"
+						"Function"			"ResetStacks"
+						"modifier"			"modifier_coup_de_grace_datadriven"
+						"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
+					}
 				}
 			}
 		}

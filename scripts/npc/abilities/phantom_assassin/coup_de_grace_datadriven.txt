@@ -1,0 +1,87 @@
+"phantom_assassin_coup_de_grace_datadriven"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"AbilityTextureName"			"phantom_assassin_coup_de_grace"
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
+	}
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"crit_damage"				"300 400 500"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"charge_distance"			"30 30 30"
+		}
+	}
+
+	
+
+	"Modifiers"
+	{
+		"modifier_coup_de_grace_datadriven"
+		{
+			"Passive"			"1"
+			"ThinkInterval"		"0.25"
+
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phantom_assassin/coup_de_grace.lua"
+					"Function"			"DistanceCheck"
+					"modifier"			"modifier_coup_de_grace_datadriven"
+					"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
+				}
+			}
+		}
+
+		"modifier_coup_de_grace_crit_datadriven"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_damage"
+			}
+
+			"OnAttackLanded"
+			{
+				"FireEffect"
+				{
+					"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
+					"EffectAttachType"		"follow_origin"
+					
+					"ControlPointEntities"
+					{
+						"TARGET"			"follow_origin"
+						"TARGET"			"follow_origin"
+					}
+				}
+
+				"FireSound"
+				{
+					"EffectName"			"Hero_PhantomAssassin.CoupDeGrace"
+					"Target"				"TARGET"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phantom_assassin/coup_de_grace.lua"
+					"Function"			"ResetStacks"
+					"modifier"			"modifier_coup_de_grace_datadriven"
+					"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
+				}
+			}
+		}
+	}
+}
