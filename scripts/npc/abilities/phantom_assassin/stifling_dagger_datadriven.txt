@@ -1,0 +1,155 @@
+"phantom_assassin_stifling_dagger_datadriven"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"phantom_assassin_stifling_dagger"
+	"AoERadius" 					"200"
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+		"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
+		"particle"			"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+	}
+
+	"AbilityCastRange"				"500 700 900 1100"
+	"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+	"AbilityCooldown"				"6 6 6 6"
+	"AbilityDuration"				"1.0 2.0 3.0 4.0"
+	"AbilityManaCost"				"30 45 60 75"
+	"AbilityDamage"					"80 120 160 200"
+		
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"damage"				"80 120 160 200"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"move_slow"					"-50"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"dagger_speed"			"1200"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"duration"				"1 2 3 4"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"radius"				"200 200 200 200"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"thinker_duration"		"5"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"		"Hero_PhantomAssassin.Dagger.Cast"
+			"Target"			"CASTER"
+		}
+
+		"CreateThinker"
+		{
+			"ModifierName"	"modifier_stifling_dagger_thinker_datadriven"
+			"Target"		"POINT"
+		}
+	}
+
+	"OnProjectileHitUnit"
+	{
+		"AttachEffect"
+		{
+			"EffectName"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"EffectAttachType"	"attach_origin"
+			"Target"			"TARGET"
+			"ControlPoints"
+			{
+				"00" "0 0 0"
+				"01" "%radius %radius %radius"
+			}
+		}
+
+		"ActOnTargets"
+		{
+			"Target"
+			{
+				"Center"  				"TARGET"
+				"Radius" 				"%radius"
+				"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			}
+
+			"Action"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"    	"modifier_stifling_dagger_slow_datadriven"
+					"Target"			"TARGET"
+					"Duration"			"%duration"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phantom_assassin/stifling_dagger.lua"
+					"Function"			"CalculateDamage"
+					"modifier"			"modifier_coup_de_grace_datadriven"
+					"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
+					"crit_ability"		"phantom_assassin_coup_de_grace_datadriven"
+				}
+			}
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_stifling_dagger_thinker_datadriven"
+		{
+			"OnCreated"
+			{
+				"TrackingProjectile"
+				{
+					"Target"           	"TARGET"
+					"EffectName"       	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+					"Dodgeable"        	"1"
+					"ProvidesVision"   	"1"
+					"VisionRadius"		"300"
+					"MoveSpeed"        	"%dagger_speed"
+					"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+					"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+		}
+
+		"modifier_stifling_dagger_slow_datadriven"
+		{
+			"IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
+			}
+		}
+	}
+}

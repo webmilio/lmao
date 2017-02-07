@@ -17,12 +17,17 @@
 		"01"
 		{
 			"var_type"					"FIELD_INTEGER"
-			"crit_damage"				"300 400 500"
+			"crit_damage"				"230 340 450"
 		}
 		"02"
 		{
-			"var_type"					"FIELD_FLOAT"
-			"charge_distance"			"30 30 30"
+			"var_type"					"FIELD_INTEGER"
+			"charge_distance"			"60 60 60"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_charge"				"10 10 10"
 		}
 	}
 
@@ -43,6 +48,17 @@
 					"Function"			"DistanceCheck"
 					"modifier"			"modifier_coup_de_grace_datadriven"
 					"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
+					"blur_modifier"		"modifier_blur_hidden_datadriven"
+				}
+			}
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_phantom_assassin/coup_de_grace.lua"
+					"Function"			"StackOnHit"
+					"modifier"			"modifier_coup_de_grace_datadriven"
 				}
 			}
 		}

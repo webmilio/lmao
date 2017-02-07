@@ -852,6 +852,96 @@
 	}
 
 	// PHANTOM ASSASSIN
+	"phantom_assassin_blur_datadriven"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"phantom_assassin_blur"
+	
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		}
+	
+		"AbilityDuration"				"3"
+		"AbilityCastRange"				"1400"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_evasion"				"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1400 1400 1400 1400"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 3.0 3.0 3.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stack_count"				"3 3 3 3"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_blur_datadriven"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+	
+				"ThinkInterval"	"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_phantom_assassin/blur.lua"
+						"Function"		"Blur"
+						"modifier"		"modifier_blur_hidden_datadriven"
+					}
+				}
+	
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_phantom_assassin/blur.lua"
+						"Function"		"EvasionStack"
+						"modifier"		"modifier_blur_evasion_datadriven"
+					}
+				}
+			}
+	
+			"modifier_blur_evasion_datadriven"
+			{
+				"Duration"	"%duration"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
+				}
+			}
+	
+			"modifier_blur_hidden_datadriven"
+			{
+				"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"EffectAttachType"		"follow_origin"
+	
+				"States"
+				{
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
 	"phantom_assassin_coup_de_grace_datadriven"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -871,12 +961,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"300 400 500"
+				"crit_damage"				"230 340 450"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"charge_distance"			"30 30 30"
+				"var_type"					"FIELD_INTEGER"
+				"charge_distance"			"60 60 60"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_charge"				"10 10 10"
 			}
 		}
 	
@@ -897,6 +992,17 @@
 						"Function"			"DistanceCheck"
 						"modifier"			"modifier_coup_de_grace_datadriven"
 						"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
+						"blur_modifier"		"modifier_blur_hidden_datadriven"
+					}
+				}
+	
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phantom_assassin/coup_de_grace.lua"
+						"Function"			"StackOnHit"
+						"modifier"			"modifier_coup_de_grace_datadriven"
 					}
 				}
 			}
@@ -935,6 +1041,276 @@
 						"modifier"			"modifier_coup_de_grace_datadriven"
 						"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
 					}
+				}
+			}
+		}
+	}
+
+	"phantom_assassin_phantom_strike_datadriven"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"phantom_assassin_phantom_strike"
+		"CastFilterRejectCaster" 		"1"
+	
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+		}
+		
+		"AbilityCastRange"				"1000 1000 1000 1000"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"AbilityCooldown"				"14 11 8 5"
+		"AbilityDuration"				"4 4 4 4"
+		"AbilityManaCost"				"50 50 50 50"
+		"AbilityDamage"					"60 90 120 150"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"130"
+			}
+			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_max_attack_count"	"4"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0 4.0 4.0 4.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"30 60 90 120"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"Blink"
+			{
+				"Target"	"TARGET"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"		"Hero_PhantomAssassin.Strike.Start"
+				"Target"			"CASTER"
+			}
+	
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"		"Hero_PhantomAssassin.Strike.End"
+				"Target"			"CASTER"
+			}
+	
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_PHYSICAL"
+				"Damage"		"%damage"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"				"heroes/hero_phantom_assassin/phantom_strike.lua"
+				"Function"					"PhantomStrike"
+				"modifier"					"modifier_phantom_strike_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_phantom_strike_datadriven"
+			{
+				"IsBuff"	"1"
+	
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"heroes/hero_phantom_assassin/phantom_strike.lua"
+						"Function"					"PhantomStrikeAttack"
+						"modifier"					"modifier_phantom_strike_datadriven"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				}
+			}
+		}
+	}
+
+	"phantom_assassin_stifling_dagger_datadriven"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"phantom_assassin_stifling_dagger"
+		"AoERadius" 					"200"
+	
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
+			"particle"			"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+		}
+	
+		"AbilityCastRange"				"500 700 900 1100"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"AbilityCooldown"				"6 6 6 6"
+		"AbilityDuration"				"1.0 2.0 3.0 4.0"
+		"AbilityManaCost"				"30 45 60 75"
+		"AbilityDamage"					"80 120 160 200"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 120 160 200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_slow"					"-50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dagger_speed"			"1200"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"1 2 3 4"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200 200 200 200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"thinker_duration"		"5"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_PhantomAssassin.Dagger.Cast"
+				"Target"			"CASTER"
+			}
+	
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_stifling_dagger_thinker_datadriven"
+				"Target"		"POINT"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"			"TARGET"
+				"ControlPoints"
+				{
+					"00" "0 0 0"
+					"01" "%radius %radius %radius"
+				}
+			}
+	
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  				"TARGET"
+					"Radius" 				"%radius"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"    	"modifier_stifling_dagger_slow_datadriven"
+						"Target"			"TARGET"
+						"Duration"			"%duration"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_phantom_assassin/stifling_dagger.lua"
+						"Function"			"CalculateDamage"
+						"modifier"			"modifier_coup_de_grace_datadriven"
+						"crit_modifier"		"modifier_coup_de_grace_crit_datadriven"
+						"crit_ability"		"phantom_assassin_coup_de_grace_datadriven"
+					}
+				}
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_stifling_dagger_thinker_datadriven"
+			{
+				"OnCreated"
+				{
+					"TrackingProjectile"
+					{
+						"Target"           	"TARGET"
+						"EffectName"       	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+						"Dodgeable"        	"1"
+						"ProvidesVision"   	"1"
+						"VisionRadius"		"300"
+						"MoveSpeed"        	"%dagger_speed"
+						"SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+						"TargetTypes"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					}
+				}
+			}
+	
+			"modifier_stifling_dagger_slow_datadriven"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"EffectName"	"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
 				}
 			}
 		}

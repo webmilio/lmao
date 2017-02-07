@@ -1,0 +1,89 @@
+"phantom_assassin_blur_datadriven"
+{
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName"			"phantom_assassin_blur"
+
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+	}
+
+	"AbilityDuration"				"3"
+	"AbilityCastRange"				"1400"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_evasion"				"20"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"radius"					"1400 1400 1400 1400"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"3.0 3.0 3.0 3.0"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"max_stack_count"				"3 3 3 3"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_blur_datadriven"
+		{
+			"Passive"		"1"
+			"IsHidden"		"1"
+
+			"ThinkInterval"	"0.5"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_phantom_assassin/blur.lua"
+					"Function"		"Blur"
+					"modifier"		"modifier_blur_hidden_datadriven"
+				}
+			}
+
+			"OnAttackLanded"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_phantom_assassin/blur.lua"
+					"Function"		"EvasionStack"
+					"modifier"		"modifier_blur_evasion_datadriven"
+				}
+			}
+		}
+
+		"modifier_blur_evasion_datadriven"
+		{
+			"Duration"	"%duration"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
+			}
+		}
+
+		"modifier_blur_hidden_datadriven"
+		{
+			"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"EffectAttachType"		"follow_origin"
+
+			"States"
+			{
+				"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}
